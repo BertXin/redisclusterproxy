@@ -1,0 +1,35 @@
+# Redis集群代理配置示例
+# 直接连接Redis集群节点，无需CLB
+
+# 代理服务监听端口
+proxy_port: 6379
+
+# Redis集群节点列表
+# 请替换为您的实际Redis集群节点地址
+redis_nodes:
+  - "redis-node-1.example.com:6379"
+  - "redis-node-2.example.com:6379"
+  - "redis-node-3.example.com:6379"
+  - "redis-node-4.example.com:6379"
+  - "redis-node-5.example.com:6379"
+  - "redis-node-6.example.com:6379"
+
+# 自动重定向配置
+# true: 代理自动处理MOVED/ASK重定向，客户端无感知
+# false: 将重定向响应返回给客户端，由客户端处理
+auto_redirect: true
+
+# 配置说明：
+# 1. proxy_port: 代理服务监听的端口，客户端连接此端口
+# 2. redis_nodes: Redis集群节点地址列表，代理会自动发现完整的集群拓扑
+# 3. auto_redirect: 是否启用自动重定向功能
+
+# 使用步骤：
+# 1. 复制此文件为 config.yaml
+# 2. 修改 redis_nodes 为您的实际Redis集群节点地址
+# 3. 运行: ./redis-cluster-proxy -config config.yaml
+
+# 注意事项：
+# - 确保代理服务器能够直接访问所有Redis集群节点
+# - 代理会自动发现集群拓扑，只需配置部分节点即可
+# - 启用auto_redirect可以让客户端无需处理集群重定向
